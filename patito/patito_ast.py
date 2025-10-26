@@ -85,7 +85,7 @@ class PatitoAST(Transformer):
     def condition(self, ifc, _semi):
         return ("if_stmt", ifc)
 
-    def if_condition(self, _if, _lp, cond, _rp, then_body, else_opt, _semi):
+    def if_condition(self, _if, _lp, cond, _rp, then_body, else_opt):
         return ("if", cond, then_body, else_opt)
 
     def else_opt(self, *xs):

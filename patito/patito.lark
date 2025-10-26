@@ -87,7 +87,7 @@ statement       : assign
 assign          : ID ASSIGN_OP expresion SEMI
 
 condition       : if_condition SEMI
-if_condition    : KW_IF LP expresion RP body else_opt SEMI
+if_condition    : KW_IF LP expresion RP body else_opt
 else_opt        : (KW_ELSE body)?
 
 cycle           : KW_WHILE LP expresion RP KW_DO cuerpo SEMI
