@@ -1,0 +1,125 @@
+// ======================
+//  Patito (Lark LALR)
+//  Scanner + Parser
+// ======================
+
+// --- Ignorar espacios/tabs/newlines
+%import common.WS
+%ignore WS
+
+// --- Palabras reservadas 
+KW_VOID     : "void"
+KW_WHILE    : "while"
+KW_IF       : "if"
+KW_INT      : "int"
+KW_FLOAT    : "float"
+KW_DO       : "do"
+KW_ELSE     : "else"
+KW_PRINT    : "print"
+KW_PROG     : "programa"
+KW_MAIN     : "main"
+KW_END      : "end"
+KW_VAR      : "var"
+
+// --- Símbolos
+ASSIGN_OP   : "="
+PLUS        : "+"
+MINUS       : "-"
+MUL         : "*"
+DIV         : "/"
+NEQ         : "!="
+LT          : "<"
+GT          : ">"
+COMMA       : ","
+COLON       : ":"
+SEMI        : ";"
+LP          : "("
+RP          : ")"
+LB          : "{"
+RB          : "}"
+LBR         : "["
+RBR         : "]"
+
+// --- Tokens léxicos
+// id
+ID          : /[A-Za-z_][A-Za-z0-9_]*/
+
+// enteros y flotantes (flotante permite notación científica)
+CTE_INT     : /\d+/
+CTE_FLOAT   : /\d+\.\d+([eE][+-]?\d+)?/
+
+// strings con escapes (comillas dobles)
+STRING      : /"([^"\\]|\\.)*"/
+
+// --------------------------------------------------------------------------------------
+//  Reglas (CFG) 
+//  Referencia: Programa, Vars, Funcs, Body, Statements, Expr, Term, Factor
+
+start           : programa
+
+programa        : KW_PROG ID SEMI vars_list funcs_list KW_MAIN body KW_END
+
+// ----------- VARS -----------
+vars_list       : (vars)*
+vars            : KW_VAR id_plus COLON type SEMI vars_plus
+vars_plus       : (id_plus COLON type SEMI)*
+
+id_plus         : ID (COMMA ID)*
+
+type            : KW_INT | KW_FLOAT
+
+// ----------- FUNCS ----------
+funcs_list      : (func)*
+func            : KW_VOID ID LP funcs_params RP LBR vars_list body RBR SEMI
+funcs_params    : (param (COMMA param)*)?
+param           : ID COLON type
+
+// ----------- BODY / STATEMENTS
+body            : LB statement_plus RB
+statement_plus  : (statement)*
+
+statement       : assign
+                | condition
+                | cycle
+                | f_call
+                | print_stmt
+
+assign          : ID ASSIGN_OP expresion SEMI
+
+condition       : if_condition SEMI
+if_condition    : KW_IF LP expresion RP body else_opt SEMI
+else_opt        : (KW_ELSE body)?
+
+cycle           : KW_WHILE LP expresion RP KW_DO cuerpo SEMI
+cuerpo          : body
+
+f_call          : ID LP exp_plus RP SEMI
+exp_plus        : (expresion (COMMA expresion)*)?
+
+// print:
+//  - print(expr);
+//  - print("texto");
+//  - (del PDF aparece "print ( EXPRESION EXP_PLUS ) ;" → compatible con múltiple expr)
+print_stmt      : KW_PRINT LP print_args RP SEMI
+print_args      : (STRING | expresion) (COMMA (STRING | expresion))*
+
+// ----------- EXPRESIONES (comparaciones, suma/ resta, mul/div, factor)
+?expresion      : exp (comparador exp)?          -> expr_cmp_opt
+comparador      : GT | LT | NEQ
+
+?exp            : term (signo term)*             -> expr_addsub
+signo           : PLUS | MINUS
+
+?term           : factor (operador factor)*      -> expr_muldiv
+operador        : MUL | DIV
+
+?factor         : LP expresion RP
+                | signo valor                    -> signed
+                | valor
+
+valor           : ID
+                | cte
+
+cte             : CTE_INT
+                | CTE_FLOAT
+
