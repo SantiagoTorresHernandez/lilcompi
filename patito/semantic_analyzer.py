@@ -22,12 +22,12 @@ class SemanticAnalyzer:
             self.add_error(str(e))
         
         if self.errors:
-            print("\n>> Errores semánticos encontrados:")
+            print("\nErrores semánticos encontrados:")
             for i, error in enumerate(self.errors, 1):
                 print(f"  {i}. {error}")
             return False
         
-        print(">> Análisis semántico completado sin errores")
+        print("Análisis semántico completado sin errores")
         return True
     
     # Punto neuralgico 1: Coordinacion general

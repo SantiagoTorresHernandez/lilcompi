@@ -6,7 +6,7 @@ class VariableInfo:
         self.kind = kind
     
     def __repr__(self):
-        return f"{self.name}: {self.type} ({self.kind})"
+        return f"{self.name}: {self.type}"
 
 
 class VariableTable:
@@ -69,48 +69,6 @@ class VariableTable:
     def is_global_variable(self, name):
         return name in self.global_vars
     
-    def get_all_global_vars(self):
-        return dict(self.global_vars)
-    
     def get_current_scope_vars(self):
         return dict(self.scope_stack[-1])
-    
-    def count_global_vars(self):
-        return len(self.global_vars)
-    
-    def count_local_vars(self):
-        if self.is_global_scope():
-            return 0
-        return len(self.scope_stack[-1])
-    
-    def __repr__(self):
-        result = ["=== TABLA DE VARIABLES ===\n"]
-        
-        for i, scope in enumerate(self.scope_stack):
-            scope_name = self.scope_names[i]
-            
-            if i == 0:
-                result.append(f"SCOPE GLOBAL:")
-            else:
-                result.append(f"\nSCOPE LOCAL: {scope_name}")
-            
-            if not scope:
-                result.append("  (vacio)")
-            else:
-                params = [(n, v) for n, v in scope.items() if v.kind == 'param']
-                vars_list = [(n, v) for n, v in scope.items() if v.kind == 'var']
-                
-                if params:
-                    result.append("  Parámetros:")
-                    for name, var_info in params:
-                        result.append(f"    - {name}: {var_info.type}")
-                
-                if vars_list:
-                    result.append("  Variables:")
-                    for name, var_info in vars_list:
-                        result.append(f"    - {name}: {var_info.type}")
-        
-        result.append(f"\nTotal variables globales: {self.count_global_vars()}")
-        
-        return "\n".join(result)
 
