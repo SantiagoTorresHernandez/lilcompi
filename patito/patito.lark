@@ -20,6 +20,7 @@ KW_PROG     : "programa"
 KW_MAIN     : "main"
 KW_END      : "end"
 KW_VAR      : "var"
+KW_RETURN   : "return"
 
 // --- Símbolos
 ASSIGN_OP   : "="
@@ -70,7 +71,8 @@ type            : KW_INT | KW_FLOAT
 
 // ----------- FUNCS ----------
 funcs_list      : (func)*
-func            : KW_VOID ID LP funcs_params RP LBR vars_list body RBR SEMI
+func            : func_type ID LP funcs_params RP LBR vars_list body RBR SEMI
+func_type       : KW_VOID | KW_INT | KW_FLOAT
 funcs_params    : (param (COMMA param)*)?
 param           : ID COLON type
 
@@ -83,6 +85,9 @@ statement       : assign
                 | cycle
                 | f_call
                 | print_stmt
+                | return_stmt
+
+return_stmt     : KW_RETURN LP expresion RP SEMI
 
 assign          : ID ASSIGN_OP expresion SEMI
 
@@ -117,8 +122,12 @@ operador        : MUL | DIV
                 | signo valor                    -> signed
                 | valor
 
-valor           : ID
+valor           : func_call_expr
+                | ID
                 | cte
+
+// Llamada a función como expresión (sin punto y coma)
+func_call_expr  : ID LP exp_plus RP
 
 cte             : CTE_INT
                 | CTE_FLOAT

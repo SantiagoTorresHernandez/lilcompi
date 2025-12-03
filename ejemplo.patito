@@ -1,0 +1,22 @@
+programa EjemploCompleto;
+var n, resultado: int;
+
+int factorial(x: int) [
+    var res: int;
+    {
+        if (x < 2) {
+            return(1);
+        } else {
+            res = x * factorial(x - 1);
+            return(res);
+        };
+    }
+];
+
+main {
+    n = 5;
+    resultado = factorial(n);
+    print("El factorial de 5 es: ", resultado);
+}
+end
+

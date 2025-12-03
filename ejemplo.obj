@@ -1,0 +1,248 @@
+{
+  "program_name": "EjemploCompleto",
+  "quadruples": [
+    [
+      "GOTO",
+      null,
+      null,
+      27
+    ],
+    [
+      "LT",
+      3000,
+      7000,
+      5000
+    ],
+    [
+      "GOTOF",
+      5000,
+      null,
+      5
+    ],
+    [
+      "RETURN",
+      7001,
+      null,
+      1000
+    ],
+    [
+      "GOTO",
+      null,
+      null,
+      13
+    ],
+    [
+      "MINUS",
+      3000,
+      7001,
+      5001
+    ],
+    [
+      "ERA",
+      "factorial",
+      null,
+      null
+    ],
+    [
+      "PARAM",
+      5001,
+      null,
+      0
+    ],
+    [
+      "GOSUB",
+      "factorial",
+      null,
+      1
+    ],
+    [
+      "=",
+      1000,
+      null,
+      5002
+    ],
+    [
+      "MUL",
+      3000,
+      5002,
+      5003
+    ],
+    [
+      "=",
+      5003,
+      null,
+      3001
+    ],
+    [
+      "RETURN",
+      3001,
+      null,
+      1000
+    ],
+    [
+      "ENDFUNC",
+      null,
+      null,
+      null
+    ],
+    [
+      "LT",
+      3000,
+      7000,
+      5000
+    ],
+    [
+      "GOTOF",
+      5000,
+      null,
+      18
+    ],
+    [
+      "RETURN",
+      7001,
+      null,
+      1000
+    ],
+    [
+      "GOTO",
+      null,
+      null,
+      26
+    ],
+    [
+      "MINUS",
+      3000,
+      7001,
+      5001
+    ],
+    [
+      "ERA",
+      "factorial",
+      null,
+      null
+    ],
+    [
+      "PARAM",
+      5001,
+      null,
+      0
+    ],
+    [
+      "GOSUB",
+      "factorial",
+      null,
+      14
+    ],
+    [
+      "=",
+      1000,
+      null,
+      5002
+    ],
+    [
+      "MUL",
+      3000,
+      5002,
+      5003
+    ],
+    [
+      "=",
+      5003,
+      null,
+      3001
+    ],
+    [
+      "RETURN",
+      3001,
+      null,
+      1000
+    ],
+    [
+      "ENDFUNC",
+      null,
+      null,
+      null
+    ],
+    [
+      "=",
+      7002,
+      null,
+      1001
+    ],
+    [
+      "ERA",
+      "factorial",
+      null,
+      null
+    ],
+    [
+      "PARAM",
+      1001,
+      null,
+      0
+    ],
+    [
+      "GOSUB",
+      "factorial",
+      null,
+      14
+    ],
+    [
+      "=",
+      1000,
+      null,
+      5000
+    ],
+    [
+      "=",
+      5000,
+      null,
+      1002
+    ],
+    [
+      "PRINT",
+      "El factorial de 5 es: ",
+      null,
+      null
+    ],
+    [
+      "PRINT",
+      1002,
+      null,
+      null
+    ],
+    [
+      "END",
+      null,
+      null,
+      null
+    ]
+  ],
+  "constants": {
+    "7000": 2,
+    "7001": 1,
+    "7002": 5
+  },
+  "functions": {
+    "factorial": {
+      "name": "factorial",
+      "return_type": "int",
+      "quad_start": 14,
+      "return_address": 1000,
+      "params": [
+        {
+          "name": "x",
+          "type": "int"
+        }
+      ],
+      "resources": {
+        "local_int": 2,
+        "local_float": 0,
+        "temp_int": 4,
+        "temp_float": 0,
+        "params_int": 1,
+        "params_float": 0
+      }
+    }
+  }
+}

@@ -1,12 +1,14 @@
 class VariableInfo:
-    def __init__(self, name, var_type, scope, kind='var'):
+    def __init__(self, name, var_type, scope, kind='var', address=None):
         self.name = name
         self.type = var_type
         self.scope = scope
         self.kind = kind
+        self.address = address  # Dirección virtual asignada
     
     def __repr__(self):
-        return f"{self.name}: {self.type}"
+        addr_str = f"@{self.address}" if self.address is not None else ""
+        return f"{self.name}: {self.type} {addr_str}"
 
 
 class VariableTable:
@@ -30,24 +32,37 @@ class VariableTable:
     def is_global_scope(self):
         return len(self.scope_stack) == 1
     
-    def add_variable(self, name, var_type, kind='var'):
+    def add_variable(self, name, var_type, kind='var', address=None):
         current_scope = self.scope_stack[-1]
         scope_name = self.current_scope_name()
         
         if name in current_scope:
             raise Exception(f"Error: Variable '{name}' ya está declarada en {scope_name}")
         
-        var_info = VariableInfo(name, var_type, scope_name, kind)
+        var_info = VariableInfo(name, var_type, scope_name, kind, address)
         current_scope[name] = var_info
     
-    def add_global_variable(self, name, var_type):
-        self.add_variable(name, var_type, kind='var')
+    def add_global_variable(self, name, var_type, address=None):
+        self.add_variable(name, var_type, kind='var', address=address)
     
-    def add_local_variable(self, name, var_type):
-        self.add_variable(name, var_type, kind='var')
+    def add_local_variable(self, name, var_type, address=None):
+        self.add_variable(name, var_type, kind='var', address=address)
     
-    def add_parameter(self, name, var_type):
-        self.add_variable(name, var_type, kind='param')
+    def add_parameter(self, name, var_type, address=None):
+        self.add_variable(name, var_type, kind='param', address=address)
+    
+    def get_variable_address(self, name):
+        """Obtiene la dirección virtual de una variable"""
+        var_info = self.lookup_variable(name)
+        return var_info.address if var_info else None
+    
+    def set_variable_address(self, name, address):
+        """Asigna una dirección virtual a una variable"""
+        var_info = self.lookup_variable(name)
+        if var_info:
+            var_info.address = address
+        else:
+            raise Exception(f"Variable '{name}' no encontrada")
     
     def lookup_variable(self, name):
         for scope in reversed(self.scope_stack):

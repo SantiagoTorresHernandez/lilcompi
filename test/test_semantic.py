@@ -1,19 +1,18 @@
 """
-Tests para el analizador semántico de Patito.
+Tests para el analizador semántico de Patito usando SDT.
+Traducción Dirigida por la Sintaxis (Syntax Directed Translation)
 """
 
 import pytest
 from pathlib import Path
-from patito.patito_parser import parse_text
-from patito.semantic_analyzer import SemanticAnalyzer
+from patito.patito_parser import parse_and_validate
 
 
 def analyze_program(source_code):
-    """Helper para parsear y analizar un programa."""
-    ast = parse_text(source_code)
-    analyzer = SemanticAnalyzer()
-    success = analyzer.analyze(ast)
-    return success, analyzer.errors
+    """Helper para parsear y analizar un programa con SDT."""
+    sdt = parse_and_validate(source_code)
+    success = not sdt.has_errors()
+    return success, sdt.errors
 
 
 def test_programa_correcto():
