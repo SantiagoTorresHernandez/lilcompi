@@ -71,7 +71,7 @@ type            : KW_INT | KW_FLOAT
 
 // ----------- FUNCS ----------
 funcs_list      : (func)*
-func            : func_type ID LP funcs_params RP LBR vars_list body RBR SEMI
+func            : func_type ID LP funcs_params RP LB vars_list body RB SEMI
 func_type       : KW_VOID | KW_INT | KW_FLOAT
 funcs_params    : (param (COMMA param)*)?
 param           : ID COLON type

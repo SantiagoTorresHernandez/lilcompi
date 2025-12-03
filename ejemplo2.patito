@@ -1,7 +1,7 @@
 programa Fibonacci;
 var n, resultado: int;
 
-int fibonacci(x: int) [
+int fibonacci(x: int) {
     var a, b: int;
     {
         if (x < 2) {
@@ -10,7 +10,7 @@ int fibonacci(x: int) [
             return(fibonacci(x - 1) + fibonacci(x - 2));
         };
     }
-];
+};
 
 main {
     n = 10;
