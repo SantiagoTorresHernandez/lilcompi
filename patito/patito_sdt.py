@@ -526,25 +526,25 @@ class _ValidarSemantica(Visitor):
             self.sdt.add_error(f"Función '{func_name}' espera {len(expected_params)} argumentos, pero recibió {len(arg_types)}")
             return None
         
-        # Validar tipos de argumentos
+        #validar tipos de argumentos
         for i, (arg_type, (param_name, param_type)) in enumerate(zip(arg_types, expected_params)):
             if arg_type and not can_assign(param_type, arg_type):
                 self.sdt.add_error(f"Argumento {i+1} de '{func_name}': se esperaba {param_type}, se obtuvo {arg_type}")
                 return None
         
-        # Generar cuádruplo ERA (Expansion of Activation Record)
+        #generar cuádruplo ERA (Expansion of Activation Record)
         self.sdt.gen_quad('ERA', func_name, None, None)
         
-        # Generar cuádruplos PARAM para cada argumento
+        #generar cuádruplos PARAM para cada argumento
         arg_addrs = self._get_arg_addresses(args_tree)
         for i, arg_addr in enumerate(arg_addrs):
             if arg_addr is not None:
                 self.sdt.gen_quad('PARAM', arg_addr, None, i)
         
-        # Generar cuádruplo GOSUB
+        #generar cuádruplo GOSUB
         self.sdt.gen_quad('GOSUB', func_name, None, func_info.quad_start)
         
-        # Si la función retorna valor, asignarlo a un temporal
+        #si la función retorna valor, asignarlo a un temporal
         if func_info.return_type != 'void' and func_info.return_address is not None:
             temp_addr = self.sdt.new_temp(func_info.return_type)
             self.sdt.gen_quad('=', func_info.return_address, None, temp_addr)

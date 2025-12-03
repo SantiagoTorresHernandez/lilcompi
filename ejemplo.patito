@@ -14,9 +14,9 @@ int factorial(x: int) [
 ];
 
 main {
-    n = 5;
+    n = 3;
     resultado = factorial(n);
-    print("El factorial de 5 es: ", resultado);
+    print("El factorial de 3 es: ", resultado);
 }
 end
 

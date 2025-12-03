@@ -1,0 +1,21 @@
+programa Fibonacci;
+var n, resultado: int;
+
+int fibonacci(x: int) [
+    var a, b: int;
+    {
+        if (x < 2) {
+            return(x);
+        } else {
+            return(fibonacci(x - 1) + fibonacci(x - 2));
+        };
+    }
+];
+
+main {
+    n = 10;
+    resultado = fibonacci(n);
+    print("Fibonacci de ", n, " es: ", resultado);
+}
+end
+
