@@ -13,7 +13,7 @@ int fibonacci(x: int) {
 };
 
 main {
-    n = 10;
+    n = 20;
     resultado = fibonacci(n);
     print("Fibonacci de ", n, " es: ", resultado);
 }
